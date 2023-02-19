@@ -18,7 +18,7 @@ default: modules
 libfoo.a: foo.o
 	$(AR) rcs $@ $^
 
-foo.o: foo.c foo.h
+foo.o: foo.cpp foo.h
 	$(CXX) -fPIC -c $<
 
 modules: setup.py pyfoo.py libfoo.a

@@ -3,26 +3,37 @@ from distutils.extension import Extension
 
 from Cython.Build import cythonize
 
-examples_extension = Extension(
-    name="cyfoo",
-    sources=["pyfoo.py"],
-    language='c++',
-    libraries=["foo"],
-    library_dirs=["."],
+setup(
+    name="Build pyfoo module with Cython using pure Python syntax",
+    ext_modules=cythonize([Extension(
+        name="cyfoo",
+        sources=["pyfoo.py"],
+        language='c++',
+        libraries=["foo"],
+        library_dirs=["."],
+    )
+    ])
 )
 
 setup(
-    name="Build pyfoo module with Cython",
-    ext_modules=cythonize([examples_extension])
-)
-
-ext_modules = Extension('_swigfoo',
-    sources=["foo.i"],
-    swig_opts=['-c++'],
-    libraries=["foo"],
-    library_dirs=["."],
+    name="Build pyHello module with Cython using cdef syntax",
+    ext_modules=cythonize([Extension(
+        name="pyhello",
+        sources=["pyhello.pyx"],
+        language='c++',
+        libraries=["foo"],
+        library_dirs=["."],
+    )
+    ])
 )
 
 setup(
     name='Build pyfoo module with Swig',
-    ext_modules=[ext_modules])
+    ext_modules=[Extension('_swigfoo',
+                           sources=["foo.i"],
+                           swig_opts=['-c++'],
+                           libraries=["foo"],
+                           library_dirs=["."],
+                           )
+                 ]
+)
