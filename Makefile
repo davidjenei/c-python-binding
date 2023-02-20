@@ -7,7 +7,7 @@
 #  [GCC 8.5.0 20210514 (Red Hat 8.5.0-3)] on linux
 #  Type "help", "copyright", "credits" or "license" for more information.
 #  >>> import cyfoo
-#  >>> cyfoo.my_hello('world!')
+#  >>> cyfoo.pyhello('world!')
 #  hello world!
 #  >>> import swigfoo
 #  >>> swigfoo.hello('world!')
@@ -24,5 +24,14 @@ foo.o: foo.cpp foo.h
 modules: setup.py pyfoo.py libfoo.a
 	python setup.py build_ext --inplace
 
-clean:
-	$(RM) -rf *.o *.a *.so build/ foo_wrap.c pyfoo.c swigfoo.py __pycache__
+.PHONY: clean-swig
+clean-swig:
+	$(RM) foo_wrap.cpp swigfoo.py
+
+.PHONY: clean-cython
+clean-cython:
+	$(RM) pyhello.cpp pyfoo.cpp
+
+.PHONY: clean
+clean: clean-swig clean-cython
+	$(RM) -r *.o *.a *.so build/ __pycache__
