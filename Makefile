@@ -21,7 +21,7 @@ libfoo.a: foo.o
 foo.o: foo.cpp foo.h
 	$(CXX) -fPIC -c $<
 
-modules: setup.py pyfoo.py libfoo.a
+modules: setup.py pyfoo.py libfoo.a foo.i
 	python setup.py build_ext --inplace
 
 .PHONY: clean-swig
